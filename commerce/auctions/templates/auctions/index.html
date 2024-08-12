@@ -1,0 +1,22 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Your Biddings</h2>
+
+    <ul>
+        {% for bid in user_bids %}
+            <li>
+                <a href="{% url 'listing' bid.auction.id %}">
+                    {{ bid.auction.title }}:
+                </a>
+                <p>
+                    Amount: {{ bid.amount|floatformat:2 }}$ - Date: {{ bid.timestamp|date:"m-d H:i" }}
+                </p>
+                {% if bid.auction.winner == user %}
+                <p style="color: blue;">You are the winner of this auction!</p>
+                {% endif %}
+            </li>
+            <hr>
+        {% endfor %}
+    </ul>
+{% endblock %}

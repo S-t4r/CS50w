@@ -1,0 +1,21 @@
+{% extends "auctions/layout.html" %}
+
+{% block title %}
+    {{category_name}}
+{% endblock %}
+
+{% block body %}
+
+    <ul>
+        {% for active in active %}
+        {% if active.category == category_name %}
+            <li>
+                <a href="{% url 'listing' active.id %}">
+                    {{ active }}
+                </a>
+            </li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+
+{% endblock %}

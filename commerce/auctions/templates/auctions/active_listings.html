@@ -1,0 +1,36 @@
+{% extends "auctions/layout.html" %}
+
+{% block title %}
+    Active Auctions
+{% endblock %}
+
+{% block body %}
+
+    {% for active in active_listing %}
+    {% if active.active %}
+    <div>
+        {% if active.user == user %}
+            <h4 style="color: Red;"> Your listing.</h4>
+        {% endif %}    
+        <h2>
+            <a href="{% url 'listing' active.id %}">
+                {{ active.title }}
+            </a>
+        </h2>
+        <h5>{{ active.category }}</h5>
+        <p>{{ active.description }}</p>
+        <p>{{ active.starting_bid|floatformat:2 }}$</p>
+        {% if active.id in user_bids %}
+            <p style="color: blue;"> You have placed a bid on this listing.</p>
+        {% endif %}
+    </div>
+        <hr>
+        {% endif %}
+
+        {% empty %}
+        <h2>No Active Listing</h2>
+        
+    {% endfor %}
+    
+
+{% endblock %}

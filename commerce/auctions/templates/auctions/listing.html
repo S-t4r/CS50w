@@ -1,0 +1,61 @@
+{% extends "auctions/layout.html" %}
+
+{% block title %}
+    {{ form.title }}
+{% endblock %}
+
+{% block body %}
+
+    {% if user != form.user and form.active and user.is_authenticated %}
+    <!-- Add to watch list -->
+        <form action="{% url 'add_to_watchlist' id=form.id %}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Add to WatchList" class="btn btn-primary">
+        </form>
+        <!-- Bid on Auctions -->
+        <form action="{% url 'bid_listing' id=form.id %}" method="post">
+            {% csrf_token %}
+            <label for="bid">Bid:</label>
+            <input type="text" name="bid" id="bid">
+            <input type="submit" value="Bid" class="btn btn-primary">
+        </form>
+    <!-- Be able to Remove or Close own Auctions -->
+    {% elif user == form.user and form.active %}
+    <form action="{% url 'remove_listing' id=form.id %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Remove" class="btn btn-primary">
+    </form>
+    <form action="{% url 'close_listing' id=form.id %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Close" class="btn btn-primary">
+    </form>
+    {% endif %}
+
+    {% if not form.active and winner %}
+        <h2>Winner: {{ winner.username }}</h2>
+    {% endif %}
+
+    <h2>Title: {{ form.title }}</h2>
+    <h4>User: {{ form.user }}</h4>
+    <p>{{ form.description }}</p>
+    <h5>Price: {{ form.starting_bid|floatformat:2 }}$</h5>
+
+    {% if form.active and user.is_authenticated %}
+        <form method="post" action="{% url 'create_comment' id=form.id %}">
+            {% csrf_token %}
+            <textarea name="comment" id="comment"></textarea>
+            <input type="submit" value="Comment" class="btn btn-primary">
+        </form>
+    {% endif %}
+    <ul>
+        {% for comment in form.comments.all %}
+            <li>{{ comment }}</li>
+        {% endfor %}
+    </ul>
+    <hr>
+    <ul>
+        {% for bid in bids %}
+            <li>{{ bid }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
