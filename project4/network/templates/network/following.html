@@ -1,0 +1,50 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block title %}
+    Followings
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        {% for post in page_obj %}
+        <div id="{{ post.id }}" class="border rounded-2 p-2 mt-2">
+            <h3>
+                <a href="{% url 'user_profile' post.user.id %}"
+                style="color: purple; text-decoration: none;">
+                    {{ post.user }}
+                </a>
+
+                {% if request.user == post.user %}
+                    <!-- Edit -->
+                    <button class="btn btn-primary edit_button" data_post_id="{{ post.id }}">Edit</button>
+                {% endif %}
+            </h3>
+            <p id="post_content_{{ post.id }}">{{ post.content }}</p>
+            <p><span style="color: gray; font-weight: 100;">{{ post.timestamp }}</span></p>
+
+            {% if request.user.is_authenticated %}
+            <button class="btn btn-dark like_button" type="button" data_post_id="{{ post.id }}">❤️</button>
+            {% endif %}
+            <span>❤️: <span id="like_count_{{ post.id }}">{{ post.likes.count }}</span></span>
+
+        </div>
+        {% endfor %}
+
+        <!-- Pagination -->
+        <div class="pagination p-2">
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            {% endif %}
+        
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">Next</a>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if request.user.is_authenticated %}
+        <script src="{% static 'network/index.js' %}"></script>
+    {% endif %}
+
+{% endblock %}
