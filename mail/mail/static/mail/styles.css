@@ -1,0 +1,79 @@
+textarea {
+    min-height: 400px;
+}
+
+.email-div {
+    display: flex;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-top: 2px;
+    padding: 5px;
+}
+
+.email-div:hover{
+    background-color: rgb(233, 247, 252);
+}
+
+.email-div:active {
+    background-color: lightblue;
+}
+
+.sender {
+    flex-grow: 0.1;
+    font-weight: 800;
+}
+
+.subject {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.timestamp {
+    flex-grow: 0;
+    color: lightslategray;
+    font-weight: 100;
+}
+
+.email-detail {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.email-detail h3 {
+    margin-top: 5px;
+    text-align: center;
+    border: 1px solid black;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.email-detail h4 {
+    text-align: center;
+    border: 1px solid black;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.email-detail h5 {
+    text-align: center;
+    border: 1px solid black;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.email-detail p {
+    text-align: center;
+    border: 1px solid black;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.email-detail button {
+    text-align: center;
+    border: 1px solid black;
+    padding: 5px;
+    border-radius: 5px;
+}
